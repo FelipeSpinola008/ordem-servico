@@ -5,10 +5,10 @@
  * @param {string} description - Details of the service order
  */
 
-const createOrder = (id, custumer, description) => {
+const createOrder = (id, customer, description) => {
     return {
         id: id,
-        custumerName: custumer,
+        customerName: customer,
         description: description,
         status: "OPEN",
         createdAt: new Date()
