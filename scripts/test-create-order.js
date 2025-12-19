@@ -1,4 +1,4 @@
-const { registerOrder } = require('../src/controllers/OrderController');
+const { RegisterOrder } = require('../src/controllers/OrderController');
 
 async function runtTest() {
     try {

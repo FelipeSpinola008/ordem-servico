@@ -24,5 +24,20 @@ const registerOrder = async (customer, description) => {
     }
 };
 
-module.exports = { registerOrder }
+
+const listAllOrders = async() => {
+    try {
+        const res = await pool.query('SELECT * FROM service_orders');
+        
+        console.log('✅ Ordem listada com sucesso!')
+        return res.rows;
+    } catch (err) {
+        console.error('❌ Erro ao listar as ordens', err.message);
+        throw err;
+    }
+}
+
+module.exports = { 
+    registerOrder,
+    listAllOrders };
 
