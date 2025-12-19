@@ -10,9 +10,9 @@ const createOrder = (id, custumer, description) => {
         id: id,
         custumerName: custumer,
         description: description,
-        staus: "OPEN",
+        status: "OPEN",
         createdAt: new Date()
     };
 };
 
-module.exports = {createOrder}
+module.exports = {createOrder};

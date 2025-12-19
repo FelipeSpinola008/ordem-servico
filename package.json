@@ -16,6 +16,7 @@
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1",
+    "pg": "^8.16.3",
     "readline-sync": "^1.4.10"
   }
 }
