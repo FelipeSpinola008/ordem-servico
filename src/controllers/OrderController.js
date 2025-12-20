@@ -55,9 +55,28 @@ const updateOrderStatus = async(id, newStatus) => {
         throw err;
     }
 }
+/**
+ * deleta ordem de serviço do banco de dados
+ * @param {number} id - numero do serviço
+ */
+
+const deleteOrders = async(id) => {
+    const query = 'DELETE FROM service_orders WHERE id = $1 RETURNING *';
+    const del = [id];
+
+    try {
+        const res = await pool.query(query, del);
+        console.log('👍Ordem deletada com sucesso!')
+        return res.rows[0];
+    } catch (err) {
+        console.error('😞 não foi possível deletar o serviço:', err.message);
+        throw err;
+    }
+}
 
 module.exports = { 
     registerOrder,
     listAllOrders,
-    updateOrderStatus };
+    updateOrderStatus,
+    deleteOrders };
 
