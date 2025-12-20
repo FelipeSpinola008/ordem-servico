@@ -24,7 +24,7 @@ const registerOrder = async (customer, description) => {
     }
 };
 
-
+// Lista ordens de serviços no banco de dados
 const listAllOrders = async() => {
     try {
         const res = await pool.query('SELECT * FROM service_orders');
@@ -37,7 +37,27 @@ const listAllOrders = async() => {
     }
 }
 
+/**
+ * atualiza o status da ordem de serviço
+ * @param {number} id - numero do serviço
+ * @param {string} newStatus - novo status do serviço
+ */
+const updateOrderStatus = async(id, newStatus) => {
+    const query = 'UPDATE service_orders SET status = $2 WHERE id = $1 RETURNING *';
+    const update = [id, newStatus];
+    
+    try {
+        const res = await pool.query(query, update);
+        console.log('😁✅ Ordem atualizada com sucesso!')
+        return res.rows[0];
+    } catch (err) {
+        console.error('❌ Erro ao atualizar status:', err.message);
+        throw err;
+    }
+}
+
 module.exports = { 
     registerOrder,
-    listAllOrders };
+    listAllOrders,
+    updateOrderStatus };
 

@@ -3,7 +3,7 @@ const { registerOrder } = require('../src/controllers/OrderController');
 async function runtTest() {
     try {
         console.log('🚀 Tentando criar uma ordem de teste...');
-        const newOrder = await registerOrder('Felipe cappuccino', 'troca de teclado mecânico');
+        const newOrder = await registerOrder('Felipe Spinola', 'Água s/ gás com gelo e limão');
         console.log('📋 Dados retornados pelo Banco:')
         console.table(newOrder);
 
