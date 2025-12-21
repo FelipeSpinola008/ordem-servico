@@ -13,6 +13,16 @@ router.get('/', async (req, res) => {
     }
 });
 
+// rota para listar ordens canceladas
+router.get('/backlog', async(req, res) => {
+    try {
+        const backlog = await orderController.backLog();
+        res.status(200).json(backlog);
+    } catch (err) {
+        res.status(500).json({ error: 'Erro embuscar ordens' });
+    }
+})
+
 // rota para listar ordem por id
 router.get('/:id', async(req, res) => {
     try {
@@ -32,8 +42,10 @@ router.get('/:id', async(req, res) => {
         res.status(200).json(currentOrder);
     } catch (err) {
         res.status(404).json({ message: 'ordem não encontrada'})
-    }
+    } 
 });
+
+
 
 // rota para criar nova ordem
 router.post('/', validateOrder, async (req, res) => {
@@ -58,7 +70,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// 4. Rota para deletar (O nosso 'Delete')
+// Rota para deletar -> muda o status da ordem para 'CANCELADO'
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -68,5 +80,6 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ error: 'Erro ao deletar ordem' });
     }
 });
+
 
 module.exports = router;

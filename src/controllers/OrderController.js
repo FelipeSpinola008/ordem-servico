@@ -98,11 +98,25 @@ const softDeleteOrder = async (id) => {
     return res.rows[0];
 }
 
+const backLog = async() => {
+    const query = "SELECT * FROM service_orders WHERE status = 'CANCELADO' ORDER BY id ASC;";
+   try {
+        console.log("🔍 buscando ordens canceladas...");
+        const res = await pool.query(query);
+        return res.rows;
+   } catch (err) {
+        console.error('😞 não foi possível encontrar as ordens canceladas:', err.message);
+        throw err;
+   }
+    
+}
+
 module.exports = { 
     registerOrder,
     listAllOrders,
     getOrderById,
     updateOrderStatus,
     deleteOrders,
-    softDeleteOrder };
+    softDeleteOrder,
+    backLog };
 
