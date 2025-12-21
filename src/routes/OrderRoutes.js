@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/OrderController');
+const validateOrder = require('../middlewares/validateOrder');
 
 // rota para listar as ordens 
 router.get('/', async (req, res) => {
@@ -13,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 // rota para criar nova ordem
-router.post('/', async (req, res) => {
+router.post('/', validateOrder, async (req, res) => {
     try{
         const { customer, description } = req.body;
         const newOrder = await orderController.registerOrder(customer, description);
