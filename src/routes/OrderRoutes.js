@@ -13,6 +13,17 @@ router.get('/', async (req, res) => {
     }
 });
 
+// rota para listar ordem por id
+router.get('/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        const order = await orderController.getOrderById(id);
+        res.status(200).json(order[0]);
+    } catch (err) {
+        res.status(404).json({ message: 'ordem não encontrada'})
+    }
+});
+
 // rota para criar nova ordem
 router.post('/', validateOrder, async (req, res) => {
     try{
