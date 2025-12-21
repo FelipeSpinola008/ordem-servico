@@ -15,8 +15,8 @@ router.get('/', async (req, res) => {
 // rota para criar nova ordem
 router.post('/', async (req, res) => {
     try{
-        const { costumer, description } = req.body;
-        const newOrder = await orderController.registerOrder(costumer, description);
+        const { customer, description } = req.body;
+        const newOrder = await orderController.registerOrder(customer, description);
         res.status(201).json(newOrder);
     } catch (err) {
         res.status(500).json({ error: 'Erro ao criar ordem' });
