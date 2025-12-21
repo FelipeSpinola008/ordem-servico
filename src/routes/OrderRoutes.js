@@ -1,5 +1,5 @@
-const express = require(express);
-const router = express.router();
+const express = require('express');
+const router = express.Router();
 const orderController = require('../controllers/OrderController');
 
 // rota para listar as ordens 

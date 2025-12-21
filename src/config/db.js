@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 pool.on('connect', () => {
-    console.log(':database: Connected to PostgreeSQL successfuly!')
+    console.log('🐘 Connected to PostgreeSQL successfuly!')
 });
 
 module.exports = pool;
