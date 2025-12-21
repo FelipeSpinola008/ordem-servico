@@ -18,7 +18,18 @@ router.get('/:id', async(req, res) => {
     try {
         const { id } = req.params;
         const order = await orderController.getOrderById(id);
-        res.status(200).json(order[0]);
+            if (!order || order.length === 0) {
+                return res.status(404).json({ message: "Ordem não encontrada" });
+            }
+
+        const currentOrder = order[0]; 
+
+            if (currentOrder.status === 'CANCELADO') {
+                return res.status(410).json({ message: "Esta ordem foi removida e não está mais disponível." });
+            }
+
+        // Se passou pelas defesas, entrega o dado!
+        res.status(200).json(currentOrder);
     } catch (err) {
         res.status(404).json({ message: 'ordem não encontrada'})
     }
@@ -51,7 +62,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const deletedOrder = await orderController.deleteOrders(id);
+        const deletedOrder = await orderController.softDeleteOrder(id);
         res.status(200).json({ message: 'Ordem deletada', data: deletedOrder });
     } catch (err) {
         res.status(500).json({ error: 'Erro ao deletar ordem' });

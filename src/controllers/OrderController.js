@@ -27,7 +27,7 @@ const registerOrder = async (customer, description) => {
 // Lista ordens de serviços no banco de dados
 const listAllOrders = async() => {
     try {
-        const res = await pool.query('SELECT * FROM service_orders');
+        const res = await pool.query(`SELECT * FROM service_orders WHERE status != 'CANCELADO' ORDER BY id ASC;`);
         
         console.log('✅ Ordem listada com sucesso!')
         return res.rows;
@@ -91,10 +91,18 @@ const deleteOrders = async(id) => {
     }
 }
 
+const softDeleteOrder = async (id) => {
+    const query = "UPDATE service_orders SET status = 'CANCELADO' WHERE id = $1 RETURNING *;";
+    console.log(`❌ Ordem: ${id} cancelada!`)
+    const res = await pool.query(query, [id]);
+    return res.rows[0];
+}
+
 module.exports = { 
     registerOrder,
     listAllOrders,
     getOrderById,
     updateOrderStatus,
-    deleteOrders };
+    deleteOrders,
+    softDeleteOrder };
 
