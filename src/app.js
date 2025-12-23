@@ -6,9 +6,11 @@ const authRoutes = require('./routes/AuthRoutes');
 const app = express();
 
 app.use(express.json());
+app.use(express.static('public'));
 
 app.use('/api/auth', authRoutes)
 app.use('/api/orders', orderRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 
