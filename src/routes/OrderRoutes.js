@@ -25,7 +25,7 @@ router.get('/backlog', auth.authMiddleWare, auth.authorize('admin'), async (req,
 });
 
 // rota para listar ordem por id
-router.get('/:id', async(req, res) => {
+router.get('/:id', auth.authMiddleWare, async(req, res) => {
     try {
         const { id } = req.params;
         const order = await orderController.getOrderById(id);
@@ -49,7 +49,7 @@ router.get('/:id', async(req, res) => {
 
 
 // rota para criar nova ordem
-router.post('/', validateOrder, async (req, res) => {
+router.post('/', auth.authMiddleWare, validateOrder, async (req, res) => {
     try{
         const { customer, description } = req.body;
         const newOrder = await orderController.registerOrder(customer, description);
@@ -60,7 +60,7 @@ router.post('/', validateOrder, async (req, res) => {
 });
 
 // rota para atualizar o status
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth.authMiddleWare, async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body; 
@@ -72,7 +72,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Rota para deletar -> muda o status da ordem para 'CANCELADO'
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth.authMiddleWare, async (req, res) => {
     try {
         const { id } = req.params;
         const deletedOrder = await orderController.softDeleteOrder(id);

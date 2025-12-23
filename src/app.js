@@ -16,6 +16,5 @@ app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando tranquilamente na porta ${PORT}`);
     console.log(`🔗 Teste a listagem em: http://localhost:${PORT}/api/orders`);
 });
-console.log("Variável JWT carregada:", process.env.JWT_SECRET ? "SIM ✅" : "NÃO ❌");
 
 module.exports = app;

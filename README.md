@@ -8,15 +8,23 @@ O projeto foi construído com foco em **Clean Code** e **Segurança**, apresenta
 
 * **Routes**: Definição de endpoints semânticos e captura de parâmetros dinâmicos.
 * **Controllers**: Lógica de negócio e comunicação direta com o banco de dados via `pg-pool`.
-* **Middlewares**: Camada de interceptação para validação de campos obrigatórios antes do processamento.
-* **Soft Delete**: Estratégia de segurança que evita a perda de dados, marcando registros como `CANCELADO` em vez de excluí-los fisicamente.
-* **Status Semânticos**: Uso correto de códigos HTTP, como `410 Gone` para recursos removidos e `404 Not Found` para buscas inexistentes.
+* **Middlewares**: Camada de interceptação para validação de campos e **controle de acesso via JWT**.
+* **Autenticação & RBAC**: Sistema de login com criptografia `bcrypt` e autorização baseada em cargos (Ex: `admin`), garantindo que apenas utilizadores autorizados acessem a dados sensíveis.
+* **Soft Delete**: Estratégia de segurança que evita a perda de dados, marcando registros como `CANCELADO` em vez de excluí-los definitivamente do banco de dados.
+* **Status Semânticos**: Uso correto de códigos HTTP, como `410 Gone` para recursos removidos e `403 Forbidden` para acessos não autorizados.
 
 ## 🛣️ Endpoints (API Reference)
 
 Abaixo, os comandos para interagir com a API via ferramentas como **Thunder Client** ou **Postman**:
 
+### 🔐 Autenticação
+| Método | Endpoint | Descrição |
+| :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Regista um novo utilizador no sistema. |
+| `POST` | `/api/auth/login` | Autentica o utilizador e devolve um Token JWT. |
+
 ### 📦 Ordens de Serviço
+**IMPORTANTE: para acessar qualquer endpoint é necessário estar logado**
 | Método | Endpoint | Descrição |
 | :--- | :--- | :--- |
 | `GET` | `/api/orders` | Lista todas as ordens com status ativo. |
@@ -25,6 +33,7 @@ Abaixo, os comandos para interagir com a API via ferramentas como **Thunder Clie
 | `POST` | `/api/orders` | Cria uma ordem (Campos `customer` e `description` obrigatórios). |
 | `PUT` | `/api/orders/:id` | Atualiza o status de uma ordem (Ex: de OPEN para FINISHED). |
 | `DELETE` | `/api/orders/:id` | Executa a exclusão lógica (Soft Delete) alterando o status. |
+
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -50,6 +59,7 @@ Abaixo, os comandos para interagir com a API via ferramentas como **Thunder Clie
     DB_NAME=ordem_servico
     DB_PASSWORD=sua_senha
     DB_PORT=5432
+    JWT_SECRET=sua_senha
 
 4. **Inicie o servidor**
     ````bash
