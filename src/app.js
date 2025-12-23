@@ -1,6 +1,6 @@
+require('dotenv').config();
 const express = require('express');
 const orderRoutes = require('./routes/OrderRoutes');
-require('dotenv').config();
 const authRoutes = require('./routes/AuthRoutes');
 
 const app = express();
@@ -16,5 +16,6 @@ app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando tranquilamente na porta ${PORT}`);
     console.log(`🔗 Teste a listagem em: http://localhost:${PORT}/api/orders`);
 });
+console.log("Variável JWT carregada:", process.env.JWT_SECRET ? "SIM ✅" : "NÃO ❌");
 
 module.exports = app;

@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/OrderController');
 const validateOrder = require('../middlewares/validateOrder');
+const auth = require('../middlewares/AuthMiddlewares');
 
 // rota para listar as ordens 
-router.get('/', async (req, res) => {
+router.get('/', auth.authMiddleWare, async (req, res) => {
     try {
         const orders = await orderController.listAllOrders();
         res.status(200).json(orders);
@@ -14,14 +15,14 @@ router.get('/', async (req, res) => {
 });
 
 // rota para listar ordens canceladas
-router.get('/backlog', async(req, res) => {
+router.get('/backlog', auth.authMiddleWare, auth.authorize('admin'), async (req, res) => {
     try {
         const backlog = await orderController.backLog();
         res.status(200).json(backlog);
     } catch (err) {
-        res.status(500).json({ error: 'Erro embuscar ordens' });
+        res.status(500).json({ error: 'Erro ao buscar backlog' });
     }
-})
+});
 
 // rota para listar ordem por id
 router.get('/:id', async(req, res) => {

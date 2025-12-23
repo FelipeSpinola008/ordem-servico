@@ -7,6 +7,7 @@ const userController = {
         try {
             const { name, email, password, role } = req.body;
 
+            console.log('Registrando novo usuário..')
             const userExist = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
             if (userExist.rows.length > 0) {
                 return res.status(400).json({ error: 'Este e-mail já está cadastrado.'})
@@ -42,7 +43,7 @@ const userController = {
         }
 
         const token = jwt.sign(
-            { id: user.rows[0].role },
+            { role: user.rows[0].role },
             process.env.JWT_SECRET,
             { expiresIn: '1d' }
         );
